@@ -13,7 +13,7 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'GTU Movil',
+      title: 'GTU Mobile',
       debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(appRouteProvider),
       theme: ref.watch(appThemeProvider),
