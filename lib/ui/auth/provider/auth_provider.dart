@@ -25,7 +25,7 @@ class AuthProvider {
       _processHandler.showProgressDialog();
       await _authRepository.signInWithEmailAndPassword(email, password);
       _processHandler.dismissProgressDialog();
-      _goRouter.goNamed(AppRouterName.home);
+      _goRouter.goNamed(AppRouterName.busFleet);
     } catch (e) {
       _processHandler.dismissProgressDialog();
       _processHandler.openModalDialogAlert(
@@ -56,7 +56,7 @@ class AuthProvider {
       _processHandler.showProgressDialog();
       await _authRepository.signUp(name, email, password);
       _processHandler.dismissProgressDialog();
-      _goRouter.goNamed(AppRouterName.home);
+      _goRouter.goNamed(AppRouterName.busFleet);
     } catch (e) {
       _processHandler.dismissProgressDialog();
       _processHandler.openModalDialogAlert(
