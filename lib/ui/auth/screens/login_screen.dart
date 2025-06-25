@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gtu_mobile/config/routes/app_router.dart';
+import 'package:gtu_mobile/ui/auth/widgets/form_login.dart';
+import 'package:gtu_mobile/ui/common/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -21,17 +26,18 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: MediaQuery.sizeOf(context).height * .15),
               const Text(
                 'Bienvenido',
                 style: TextStyle(
-                  fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
                   color: Color(0xFF1C1C1C),
@@ -41,78 +47,31 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text(
                 'Inicia sesión para continuar',
                 style: TextStyle(
-                  fontFamily: 'Poppins',
                   fontWeight: FontWeight.normal,
                   fontSize: 18,
                   color: Color(0xFF1C1C1C),
                 ),
               ),
               const SizedBox(height: 26),
-              TextField(
-                controller: _usernameController,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Correo',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Contraseña',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
+              FormLogin(
+                formKey: _formKey,
+                emailController: _usernameController,
+                passwordController: _passwordController,
               ),
               const SizedBox(height: 26),
-              SizedBox(
-                width: double.infinity,
-                height: 49,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle login
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3B62FF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    'Iniciar Sesión',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 26),
-              const Center(
-                child: Text(
-                  '¿Olvidaste tu contraseña?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF87879D),
-                  ),
-                ),
+              CustomTextButton(
+                text: "¿Olvidaste tu contraseña?",
+                onPressed: () {
+                  context.pushNamed(AppRouterName.resetPassword);
+                },
               ),
               const SizedBox(height: 10),
-              const Center(
-                child: Text(
-                  "¿No tienes una cuenta? Regístrate",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 14,
-                    color: Color(0xFF87879D),
-                  ),
-                ),
-              )
+              CustomTextButton(
+                text: "¿No tienes una cuenta? Regístrate",
+                onPressed: () {
+                  context.pushNamed(AppRouterName.register);
+                },
+              ),
             ],
           ),
         ),

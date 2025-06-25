@@ -65,4 +65,27 @@ class AuthProvider {
       );
     }
   }
+
+  void resetPassword(String email) async {
+    try {
+      _processHandler.showProgressDialog();
+      await _authRepository.resetPassword(email);
+      await Future.delayed(
+        const Duration(seconds: 2),
+      ); // Simulate network delay
+      _processHandler.dismissProgressDialog();
+      _processHandler.openModalDialogSucess(
+        title: 'Éxito',
+        message:
+            'Por favor revisa tu correo electrónico para restablecer tu contraseña.',
+        onConfirm: _goRouter.pop,
+      );
+    } catch (e) {
+      _processHandler.dismissProgressDialog();
+      _processHandler.openModalDialogAlert(
+        title: 'Algo salió mal',
+        message: e.toString(),
+      );
+    }
+  }
 }

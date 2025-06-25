@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gtu_mobile/ui/auth/widgets/form_register.dart';
-import 'package:gtu_mobile/ui/common/widgets/widgets.dart';
+import 'package:gtu_mobile/ui/auth/widgets/form_reset_password.dart';
+import 'package:gtu_mobile/ui/common/widgets/custom_text_button.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _usernameController = TextEditingController();
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
@@ -39,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               SizedBox(height: MediaQuery.sizeOf(context).height * .15),
               const Text(
-                '¡Una nueva experiencia te espera!',
+                '¡Qué bueno verte de nuevo!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
@@ -48,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Crea una cuenta para comenzar',
+                'Ingresa tu correo electrónico para restablecer tu contraseña',
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 18,
@@ -56,16 +45,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 26),
-              FormRegister(
-                formKey: _formKey,
-                nameController: _usernameController,
+
+              FormResetPassword(
                 emailController: _emailController,
-                passwordController: _passwordController,
-                confirmPasswordController: _confirmPasswordController,
+                formKey: _formKey,
               ),
+
               const SizedBox(height: 26),
+
               CustomTextButton(
-                text: "Ya tienes cuenta? Inicia sesión",
+                text: "Volver a iniciar sesión",
                 onPressed: context.pop,
               ),
             ],
