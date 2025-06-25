@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gtu_mobile/ui/auth/screens/login_screen.dart';
-import 'package:gtu_mobile/ui/auth/screens/register_screen.dart';
-import 'package:gtu_mobile/ui/auth/screens/reset_password.dart';
+import 'package:gtu_mobile/ui/auth/screens/screens.dart';
 import 'package:gtu_mobile/ui/home/screen/home_screen.dart';
-import 'package:gtu_mobile/ui/home/screen/splash_screen.dart';
+import 'package:gtu_mobile/ui/common/screens/splash_screen.dart';
 
 final appRouteProvider = Provider<GoRouter>((ref) {
   return GoRouter(
