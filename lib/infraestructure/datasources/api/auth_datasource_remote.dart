@@ -43,4 +43,15 @@ class AuthDatasourceRemote {
       rethrow;
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await _dio.post(Api.resetPassword, queryParameters: {'email': email});
+    } catch (e) {
+      if (e is DioException) {
+        throw handleDioError(e);
+      }
+      rethrow;
+    }
+  }
 }

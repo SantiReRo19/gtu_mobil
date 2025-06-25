@@ -6,5 +6,5 @@ class Api {
   static const authApi = '$_path/auth';
   static const login = '$authApi/login-passenger';
   static const register = '$authApi/register';
-  static const resetPassword = '$authApi/reset-password';
+  static const resetPassword = '$authApi/reset-password-request';
 }

@@ -38,4 +38,9 @@ class AuthRepositoryImpl implements AuthRepository {
     if (currentUser == null) throw Exception('User not signed in');
     return currentUser!;
   }
+
+  @override
+  Future<void> resetPassword(String email) async {
+    return _authDataSource.resetPassword(email);
+  }
 }
