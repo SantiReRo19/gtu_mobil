@@ -9,8 +9,7 @@ class SplashScreen extends ConsumerWidget {
   Future<void> _initializeApp(WidgetRef ref) async {
     try {
       final initialUser = await ref.read(initialUserProvider.future);
-      if (initialUser == null) throw Exception('No user data found');
-      ref.read(userProvider.notifier).state = initialUser;
+      if (!initialUser) throw Exception('No user data found');
       ref.read(appRouteProvider).goNamed(AppRouterName.home);
     } catch (e) {
       ref.read(appRouteProvider).goNamed(AppRouterName.login);
