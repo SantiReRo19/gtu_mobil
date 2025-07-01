@@ -16,5 +16,14 @@ final dioProvider = Provider<Dio>((ref) {
     }),
   );
 
+  dio.interceptors.add(
+    LogInterceptor(
+      request: true,
+      responseBody: true,
+      requestBody: true,
+      error: true,
+    ),
+  );
+
   return dio;
 });

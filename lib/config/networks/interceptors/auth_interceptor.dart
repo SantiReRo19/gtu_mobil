@@ -32,9 +32,7 @@ class AuthInterceptor extends Interceptor {
       return handler.next(options);
     }
 
-    final accessToken = await _tokenRepository.getToken();
-
-    if (await _tokenRepository.hasToken()) {
+    if (!await _tokenRepository.hasToken()) {
       return handler.reject(
         DioException(
           requestOptions: options,
@@ -47,6 +45,7 @@ class AuthInterceptor extends Interceptor {
         ),
       );
     }
+    final accessToken = await _tokenRepository.getToken();
     options.headers['Authorization'] = 'Bearer $accessToken';
     return super.onRequest(options, handler);
   }

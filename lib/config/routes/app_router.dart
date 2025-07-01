@@ -1,15 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gtu_mobile/domain/entities/bus_route.dart';
 import 'package:gtu_mobile/ui/auth/screens/screens.dart';
 import 'package:gtu_mobile/ui/home/screen/home_screen.dart';
 import 'package:gtu_mobile/ui/common/screens/splash_screen.dart';
 import 'package:gtu_mobile/ui/profile/screens/profile_screen.dart';
+import 'package:gtu_mobile/ui/profile/screens/update_password_screen.dart';
+import 'package:gtu_mobile/ui/routes/screens/route_details.dart';
 import 'package:gtu_mobile/ui/routes/screens/routes_screen.dart';
 import 'package:gtu_mobile/ui/tracking/screens/bus_fleet_screen.dart';
+import 'package:gtu_mobile/ui/tracking/screens/nearby_route_screen.dart';
 
 final appRouteProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: AppRouterName.busFleet,
+    initialLocation: AppRouterName.splash,
     routes: [
       GoRoute(
         path: AppRouterName.splash,
@@ -44,6 +48,19 @@ final appRouteProvider = Provider<GoRouter>((ref) {
                 path: AppRouterName.busFleet,
                 name: AppRouterName.busFleet,
                 builder: (context, state) => const BusFleetScreen(),
+                routes: [
+                  GoRoute(
+                    path: AppRouterName.nearbyRoutes,
+                    name: AppRouterName.nearbyRoutes,
+                    builder: (context, state) {
+                      final args = state.extra as List<double>?;
+                      return NearbyRouteScreen(
+                        latitude: args?[0],
+                        longitude: args?[1],
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -53,6 +70,16 @@ final appRouteProvider = Provider<GoRouter>((ref) {
                 path: AppRouterName.routes,
                 name: AppRouterName.routes,
                 builder: (context, state) => const RoutesScreen(),
+                routes: [
+                  GoRoute(
+                    path: AppRouterName.routesDetail,
+                    name: AppRouterName.routesDetail,
+                    builder: (context, state) {
+                      final route = state.extra as BusRoute;
+                      return RouteDetails(route: route);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -62,6 +89,15 @@ final appRouteProvider = Provider<GoRouter>((ref) {
                 path: AppRouterName.profile,
                 name: AppRouterName.profile,
                 builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: AppRouterName.updatePassword,
+                    name: AppRouterName.updatePassword,
+                    builder: (context, state) {
+                      return const UpdatePasswordScreen();
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -74,8 +110,17 @@ final appRouteProvider = Provider<GoRouter>((ref) {
 sealed class AppRouterName {
   static const splash = '/';
   static const busFleet = '/bus-fleet';
+  static const nearbyRoutes = 'nearby-routes';
+
+  // Routes
   static const routes = '/routes';
+  static const routesDetail = 'details';
+
+  // Profile
   static const profile = '/profile';
+  static const updatePassword = 'update-password';
+
+  // Authentication routes
   static const login = '/login';
   static const register = '/register';
   static const resetPassword = '/reset-password';
