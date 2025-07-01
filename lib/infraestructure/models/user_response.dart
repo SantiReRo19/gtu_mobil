@@ -1,10 +1,3 @@
-import 'dart:convert';
-
-UserResponse userResponseFromJson(String str) =>
-    UserResponse.fromJson(json.decode(str));
-
-String userResponseToJson(UserResponse data) => json.encode(data.toJson());
-
 class UserResponse {
   String message;
   UserModel data;

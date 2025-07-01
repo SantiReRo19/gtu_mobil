@@ -8,7 +8,6 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDatasourceRemote _authDataSource;
   final TokenRepository _tokenRepository;
   AuthRepositoryImpl(this._authDataSource, this._tokenRepository);
-  User? currentUser;
   @override
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     final user = await _authDataSource.signInWithEmailAndPassword(
@@ -16,13 +15,13 @@ class AuthRepositoryImpl implements AuthRepository {
       password,
     );
     await _tokenRepository.saveToken(user.accessToken);
-    currentUser = UserMapper.toEntity(user);
+    await _tokenRepository.saveUserData(UserMapper.toEntity(user));
   }
 
   @override
   Future<void> signOut() async {
     await _tokenRepository.deleteToken();
-    currentUser = null;
+    await _tokenRepository.clearUserData();
     return await _authDataSource.signOut();
   }
 
@@ -30,13 +29,16 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signUp(String name, String email, String password) async {
     final userData = await _authDataSource.signUp(name, email, password);
     await _tokenRepository.saveToken(userData.accessToken);
-    currentUser = UserMapper.toEntity(userData);
+    await _tokenRepository.saveUserData(UserMapper.toEntity(userData));
   }
 
   @override
   Future<User> getCurrentUser() async {
-    if (currentUser == null) throw Exception('User not signed in');
-    return currentUser!;
+    final userModel = await _tokenRepository.getUserData();
+    if (userModel == null) {
+      throw Exception("User not found");
+    }
+    return userModel;
   }
 
   @override
