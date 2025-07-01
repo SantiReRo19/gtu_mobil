@@ -25,7 +25,10 @@ class HomeScreen extends StatelessWidget {
         elevation: 1,
         currentIndex: navigationShell.currentIndex,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.bus_alert), label: 'Flotas'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_bus),
+            label: 'Flotas',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.route_rounded),
             label: 'Rutas',

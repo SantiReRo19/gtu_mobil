@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gtu_mobile/config/providers/user_provider.dart';
+import 'package:gtu_mobile/config/providers/bus_route_repository_provider.dart';
 import 'package:gtu_mobile/config/routes/app_router.dart';
 
 class SplashScreen extends ConsumerWidget {
@@ -8,10 +8,10 @@ class SplashScreen extends ConsumerWidget {
 
   Future<void> _initializeApp(WidgetRef ref) async {
     try {
-      final initialUser = await ref.read(initialUserProvider.future);
-      if (!initialUser) throw Exception('No user data found');
+      await ref.read(busRouteRepositoryProvider).getAllNeighborhoods();
       ref.read(appRouteProvider).goNamed(AppRouterName.busFleet);
     } catch (e) {
+      ref.invalidate(busRouteRepositoryProvider);
       ref.read(appRouteProvider).goNamed(AppRouterName.login);
     }
   }

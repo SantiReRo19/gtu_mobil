@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gtu_mobile/config/providers/auth_repository_provider.dart';
 import 'package:gtu_mobile/config/routes/app_router.dart';
+import 'package:gtu_mobile/domain/entities/user.dart';
 import 'package:gtu_mobile/domain/repositories/auth_repository.dart';
 import 'package:gtu_mobile/ui/common/handlers/process_handler.dart';
 import 'package:gtu_mobile/ui/common/providers/process_handler_provider.dart';
@@ -66,13 +67,24 @@ class AuthProvider {
     }
   }
 
+  Future<User> getCurrentUser() async {
+    try {
+      final user = await _authRepository.getCurrentUser();
+      return user;
+    } catch (e) {
+      _processHandler.openModalDialogAlert(
+        title: 'Algo salió mal',
+        message: e.toString(),
+        onConfirm: _goRouter.pop,
+      );
+      rethrow;
+    }
+  }
+
   void resetPassword(String email) async {
     try {
       _processHandler.showProgressDialog();
       await _authRepository.resetPassword(email);
-      await Future.delayed(
-        const Duration(seconds: 2),
-      ); // Simulate network delay
       _processHandler.dismissProgressDialog();
       _processHandler.openModalDialogSucess(
         title: 'Éxito',
