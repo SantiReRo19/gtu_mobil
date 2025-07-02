@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="gtu_movil"
+        android:label="gtu_mobile"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
