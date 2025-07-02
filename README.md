@@ -1,3 +1,3 @@
-# gtu_movil
+# gtu_mobile
 
 A new Flutter project.
